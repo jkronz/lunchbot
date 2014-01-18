@@ -1,3 +1,4 @@
+require_dependency 'lib/slack_integration'
 class RestaurantsController < ApplicationController
   before_action :set_restaurant, only: [:show, :edit, :update, :destroy]
 
@@ -9,7 +10,9 @@ class RestaurantsController < ApplicationController
   end
 
   def random
-    respond_with(Restaurant.order('random()').first)
+    @restaurant = Restaurant.order('random()').first
+    SlackIntegration.message_channel(@restaurant.message_text)
+    respond_with(@restaurant)
   end
 
   # GET /restaurants/1
