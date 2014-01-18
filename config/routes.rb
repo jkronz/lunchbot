@@ -1,7 +1,7 @@
 Lunchbot::Application.routes.draw do
   resources :restaurants do
     collection do
-      post :random
+      post :lunchbot
     end
   end
 

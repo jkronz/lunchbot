@@ -1,4 +1,3 @@
-require_dependency 'lib/slack_integration'
 class RestaurantsController < ApplicationController
   before_action :set_restaurant, only: [:show, :edit, :update, :destroy]
 
@@ -9,10 +8,17 @@ class RestaurantsController < ApplicationController
     @restaurants = Restaurant.all
   end
 
-  def random
-    @restaurant = Restaurant.order('random()').first
-    SlackIntegration.message_channel(@restaurant.message_text)
-    respond_with(@restaurant)
+  def lunchbot
+    add_regex = /Lunchbot: add (.*)/i
+    if params[:text] == "Lunch?"
+      @restaurant = Restaurant.order('random()').first
+      render json: {text: @restaurant.message_text}
+    elsif matches = add_regex.match(params[:text])
+      restaurant = Restaurant.create(name: matches[1])
+      render json: {text: "Sure thing, boss. #{restaurant.name} added."}
+    else
+      render json: {text: "Sorry, didn't get that.\nYou can ask 'Lunch?' or 'Lunchbot: add <restaurant name>'"}
+    end
   end
 
   # GET /restaurants/1
@@ -78,5 +84,15 @@ class RestaurantsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def restaurant_params
       params.require(:restaurant).permit(:name, :twitter)
+    end
+
+    def random_restaurant
+
+      SlackIntegration.message_channel(@restaurant.message_text)
+      render json: {body: 'ok'}, status: :ok
+    end
+
+    def message_channel(text, channel="#general")
+      {channel: channel, text: text}
     end
 end
