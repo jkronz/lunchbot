@@ -10,6 +10,7 @@ class RestaurantsController < ApplicationController
 
   def lunchbot
     add_regex = /Lunchbot: add (.*)/i
+    Rails.logger.error "Params: #{params}"
     if params[:text] == "Lunch?"
       @restaurant = Restaurant.order('random()').first
       render json: {text: @restaurant.message_text}
