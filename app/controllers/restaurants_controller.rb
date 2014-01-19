@@ -15,7 +15,7 @@ class RestaurantsController < ApplicationController
       @restaurant = Restaurant.order('random()').first
       render json: {text: @restaurant.message_text}
     elsif matches = add_regex.match(params[:text])
-      restaurant = Restaurant.create(name: matches[1])
+      restaurant = Restaurant.find_or_create_by(name: matches[1])
       render json: {text: "Sure thing, boss. #{restaurant.name} added."}
     else
       render json: {text: "Sorry, didn't get that.\nYou can ask 'Lunch?' or 'Lunchbot: add <restaurant name>'"}
