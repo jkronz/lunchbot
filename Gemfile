@@ -8,6 +8,7 @@ gem 'pg'
 
 # Use typhoeus to post to slack
 gem 'typhoeus'
+gem 'nokogiri'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'

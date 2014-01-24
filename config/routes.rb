@@ -1,8 +1,7 @@
 Lunchbot::Application.routes.draw do
-  resources :restaurants
-  get :lunchbot, to: 'restaurants#lunchbot'
+  resources :restaurants  
   post :lunchbot, to: 'restaurants#lunchbot'
-
+  get 'gifs/reaction' => 'gifs#reaction'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
