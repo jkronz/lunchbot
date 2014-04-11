@@ -18,7 +18,7 @@ class RestaurantsController < ApplicationController
       restaurant = Restaurant.find_or_create_by(name: matches[1])
       render json: {text: "Sure thing, boss. #{restaurant.name} added."}
     else
-      render json: {text: "Sorry, didn't get that.\nYou can ask 'Lunch?' or 'Lunchbot: add <restaurant name>'"}
+      render json: {text: "Sorry, didn't get that.\nYou can ask 'Lunch?' or 'Lunchbot: add [restaurant name]'"}
     end
   end
 
@@ -34,6 +34,7 @@ class RestaurantsController < ApplicationController
 
   # GET /restaurants/1/edit
   def edit
+    @tag_string = @restaurant.tags.map(&:name).join(',')
   end
 
   # POST /restaurants
