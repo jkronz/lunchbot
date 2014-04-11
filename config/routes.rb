@@ -1,7 +1,7 @@
 Lunchbot::Application.routes.draw do
-  resources :restaurants  
+  resources :restaurants
   post :lunchbot, to: 'restaurants#lunchbot'
-  get 'gifs/reaction' => 'gifs#reaction'
+  post 'cat_fact', to: 'actions#cat_fact'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -42,7 +42,7 @@ Lunchbot::Application.routes.draw do
   #       get 'recent', on: :collection
   #     end
   #   end
-  
+
   # Example resource route with concerns:
   #   concern :toggleable do
   #     post 'toggle'
